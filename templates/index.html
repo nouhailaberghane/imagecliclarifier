@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <title>Claire Image</title>
+   
+</head>
+
+<body>
+    <header >
+        <img src="../static/images/logo.png" alt="Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#" class="button">accueil</a></li>
+                <li><a href="#" class="button">à propos</a></li>
+                <li><a href="#" class="button">contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <video id="video-background" autoplay loop muted>
+        <source src="../static/videos/vid.mp4" type="video/mp4">
+    </video>
+    <h1></h1>
+    <!-- le bouton upload -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file"  class="button3">
+        
+        <input type="submit" value="Upload" class="button3">
+    </form>
+   
+    
+    <!-- fin upload-->
+   
+</body>
+</html>

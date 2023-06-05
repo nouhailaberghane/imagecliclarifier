@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Claire Image</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+    <header >
+        <img src="../static/images/logo.png" alt="Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#" class="button">accueil</a></li>
+                <li><a href="#" class="button">à propos</a></li>
+                <li><a href="#" class="button">contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <video id="video-background" autoplay loop muted>
+        <source src="../static/videos/vid.mp4" type="video/mp4">
+      </video>
+    <h1></h1>
+ 
+    <!-- le bouton executer-->
+    
+    <form action="/executer_script" method="GET">
+        <input type="submit" value="Eclaircir l'image" class="button3" onclick="afficher()">
+        <div class="loader" id="myDiv"></div>
+    </form>
+  
+  
+    <!-- fin executer -->
+    <script>
+        function afficher() {
+            var div = document.getElementById("myDiv");
+            div.classList.toggle("loader");
+        }
+    </script>
+</body>
+
+</html>
