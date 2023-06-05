@@ -12,6 +12,7 @@ from tqdm import tqdm
 from exposure_enhancement import enhance_image_exposure
 
 
+
 def main(args):
     # load images
     imdir = args.folder
@@ -29,14 +30,13 @@ def main(args):
     for i, image in tqdm(enumerate(images), desc="Enhancing images"):
         enhanced_image = enhance_image_exposure(image, args.gamma, args.lambda_, not args.lime,
                                                 sigma=args.sigma, bc=args.bc, bs=args.bs, be=args.be, eps=args.eps)
-        global filename
+        
         filename = basename(files[i])
         name, ext = splitext(filename)
         method = "LIME" if args.lime else "DUAL"
-        global corrected_name 
-        corrected_name = f"{name}_{method}_g{args.gamma}_l{args.lambda_}{ext}"
+        corrected_name = filename
         cv2.imwrite(join(directory, corrected_name), enhanced_image)
-
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -64,3 +64,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     main(args)
+    

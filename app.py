@@ -3,7 +3,8 @@ import subprocess
 import os
 
 import datetime
-import demo
+
+
 app = Flask(__name__)
 
 # index page--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ def upload():
     file = request.files.get('file')
     if file:
 # Handle the file upload logic ------------------------------------------------------
-
+        global filename
         filename = file.filename
         file.save('demo/' + filename)
         return render_template('clair.html')
@@ -40,37 +41,44 @@ def executer_script():
 
 @app.route('/download')
 def download():
-    folder = 'C:/Users/haila/Desktop/flask/demo/enhanced'  # Directory where the image is stored
-    filename = demo.corrected_name
-    if filename :
-        return send_from_directory(folder, filename, as_attachment=True)
+    folder = 'C:/Users/haila/Desktop/flask/demo/enhanced'  # Directory where the file is stored
+    
+    file =  filename # Use the variable corrected_name
+    
+    if filename:
+        return send_from_directory(folder, file, as_attachment=True)
     else:
         return "File not found."
+ 
 
 # supprimer old image -----------------------------------------------------------------
-folder_path1 = 'demo/enhanced/'
-folder_path2 = 'demo/'
+folder_path1 = 'demo/enhanced'
+folder_path2 = 'demo'
 
 
-def delete_files_after_24h(folder_path):
+def delete_files_after_5min(folder_path):
     file_list = os.listdir(folder_path)  # Get a list of all files in the folder
 
     for file_name in file_list:
         file_path = os.path.join(folder_path, file_name)  # Construct the full file path
 
-        # Get the creation time of the file
-        creation_time = datetime.datetime.fromtimestamp(os.path.getctime(file_path))
+        # Check if the path points to a file
+        if os.path.isfile(file_path):
+            # Get the modification time of the file
+            modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(file_path))
 
-        # Calculate the time elapsed since the file creation
-        time_elapsed = datetime.datetime.now() - creation_time
+            # Calculate the time elapsed since the file modification
+            time_elapsed = datetime.datetime.now() - modification_time
 
-        # Check if the time elapsed is greater than or equal to 24 hours
-        if time_elapsed >= datetime.timedelta(hours=24):
-            # Delete the file
-            os.remove(file_path)
+            # Check if the time elapsed is greater than or equal to 24 hours
+            if time_elapsed >= datetime.timedelta(minutes=5):
+                # Delete the file
+                os.remove(file_path)
 
-delete_files_after_24h(folder_path1)
-delete_files_after_24h(folder_path2)
+
+
+delete_files_after_5min(folder_path1)
+delete_files_after_5min(folder_path2)
 
 
 if __name__ == '__main__':
